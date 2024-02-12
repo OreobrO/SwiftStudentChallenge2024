@@ -9,9 +9,10 @@ import SwiftUI
 
 struct GridView: View {
     @EnvironmentObject var dataModel: DataModel
-    
+    @EnvironmentObject var badgeModel: BadgeModel
+
     private static let columns = 3
-    @State private var isAddingPhoto = false
+    @State private var isAddingBadge = false
     @State private var isEditing = false
     
     @State private var gridColumns = Array(repeating: GridItem(.flexible()), count: columns)
@@ -52,8 +53,9 @@ struct GridView: View {
         }
         .navigationBarTitle("Template Gallery")
         .navigationBarTitleDisplayMode(.inline)
-        .sheet(isPresented: $isAddingPhoto) {
-            PhotoPicker()
+        .sheet(isPresented: $isAddingBadge) {
+//            PhotoPicker()
+            BadgeView().environmentObject(badgeModel)
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -63,7 +65,7 @@ struct GridView: View {
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    isAddingPhoto = true
+                    isAddingBadge = true
                 } label: {
                     Image(systemName: "plus")
                 }
