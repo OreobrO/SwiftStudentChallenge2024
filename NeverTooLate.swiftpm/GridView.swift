@@ -9,10 +9,11 @@ import SwiftUI
 
 struct GridView: View {
     @EnvironmentObject var badgeModel: BadgeModel
-
+    
     private static let columns = 3
     @State private var isAddingBadge = false
     @State private var isEditing = false
+    @State private var showingDeleteAlert = false
     
     @State private var gridColumns = Array(repeating: GridItem(.flexible()), count: columns)
     
@@ -22,7 +23,7 @@ struct GridView: View {
                 LazyVGrid(columns: gridColumns) {
                     ForEach(badgeModel.badges) { badge in
                         GeometryReader { geo in
-                            NavigationLink(destination: DetailView(badge: badge)) {
+                            NavigationLink(destination: DrawingView(badge: badge)) {
                                 GridItemView(badge: badge)
                             }
                         }
@@ -53,21 +54,43 @@ struct GridView: View {
         .navigationBarTitle("Template Gallery")
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $isAddingBadge) {
-            BadgePickerView().environmentObject(badgeModel)
+            BadgePickerView(isPresented: $isAddingBadge).environmentObject(badgeModel)
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(isEditing ? "Done" : "Edit") {
-                    withAnimation { isEditing.toggle() }
+                    isEditing.toggle()
                 }
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    isAddingBadge = true
+                    if isEditing {
+                        showingDeleteAlert = true
+                    } else {
+                        isAddingBadge = true
+                    }
                 } label: {
-                    Image(systemName: "plus")
+                    if isEditing {
+                        Text("Delete all")
+                            .foregroundStyle(.red)
+                    } else {
+                        Image(systemName: "plus")
+                    }
                 }
             }
+        }
+        .alert(isPresented: $showingDeleteAlert) {
+            Alert(
+                title: Text("Delete All Badges"),
+                message: Text("Are you sure you want to delete all badges?"),
+                primaryButton: .destructive(Text("Delete"), action: {
+                    badgeModel.removeAll()
+                    isEditing = false
+                }),
+                secondaryButton: .cancel{
+                    isEditing = false
+                }
+            )
         }
     }
 }

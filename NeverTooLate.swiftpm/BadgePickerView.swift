@@ -13,6 +13,7 @@ struct BadgePickerView: View {
     @State private var selectedColor = Color.red
     @State private var selectedSymbol = "heart"
     @State private var selectedWeight = 1
+    @Binding var isPresented: Bool
     let fontWeightInt = [0, 1, 2, 3]
     let fontWeights: [Font.Weight] = [.thin, .regular, .bold, .black]
     let fontWeightLabels = ["Thin", "Regular", "Bold", "Black"]
@@ -26,16 +27,6 @@ struct BadgePickerView: View {
                 .foregroundColor(selectedColor)
                 .padding(8)
                 .frame(width: 80, height: 80)
-            
-            ForEach(badgeModel.badges, id: \.self) { badge in
-                Image(systemName: badge.symbol)
-                    .resizable()
-                    .fontWeight(fontWeights[badge.fontWeight])
-                    .aspectRatio(contentMode: .fit)
-                    .foregroundColor(changeArrayToColor(badge.color))
-                    .padding(8)
-                    .frame(width: 80, height: 80)
-            }
             
             Picker("Symbol", selection: $selectedSymbol) {
                 ForEach(badgeModel.symbolList, id: \.self) { symbol in
@@ -66,13 +57,9 @@ struct BadgePickerView: View {
             Button("Save Badge") {
                 let badge = Badge(name: selectedSymbol, symbol: selectedSymbol, color: changeColorToArray(selectedColor), fontWeight: selectedWeight)
                 badgeModel.addBadge(badge)
-                print(badgeModel.badges.count)
-                print(selectedColor)
+                isPresented = false
             }
             .padding()
-            .onAppear {
-                badgeModel.removeAll()
-            }
         }
     }
 }
@@ -101,8 +88,4 @@ func changeArrayToColor(_ array: [CGFloat]) -> Color {
     let alpha: CGFloat = array.count > 3 ? array[3] : 1.0
     
     return Color(red: Double(red), green: Double(green), blue: Double(blue), opacity: Double(alpha))
-}
-
-#Preview {
-    BadgePickerView()
 }

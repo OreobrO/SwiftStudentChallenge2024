@@ -9,12 +9,15 @@ import SwiftUI
 import PencilKit
 
 struct DrawingView: View {
-    var image: Image
+    @EnvironmentObject var badgeModel: BadgeModel
     @State private var showingAlert = false
     @State private var pkCanvasView = PKCanvasView()
     @State private var isSharing = false
     @State private var isBackgroundHiding = false
     
+    let badge: Badge
+    let fontWeights: [Font.Weight] = [.thin, .regular, .bold, .black]
+
     var body: some View {
         
         ZStack {
@@ -22,10 +25,13 @@ struct DrawingView: View {
                 .foregroundColor(.white)
                 .shadow(color: Color(red: 0.8, green: 0.8, blue: 0.8, opacity: 0.5), radius: 8)
             
-            image
-                .resizable()
-                .scaledToFit()
-                .opacity(isBackgroundHiding ? 0 : 0.3)
+                Image(systemName: badge.symbol)
+                    .resizable()
+                    .fontWeight(fontWeights[badge.fontWeight])
+                    .aspectRatio(contentMode: .fit)
+                    .foregroundColor(changeArrayToColor(badge.color))
+                    .padding(8)
+                    .frame(width: 200, height: 200)
             
             GeometryReader { geo in
                 PKCanvas(canvasView: $pkCanvasView)
@@ -34,15 +40,6 @@ struct DrawingView: View {
                 
                 VStack(alignment: .trailing) {
                     HStack {
-                        Button {
-                            isBackgroundHiding.toggle()
-                        } label: {
-                            Image(systemName: isBackgroundHiding ? "eye" : "eye.slash")
-                        }
-                        .frame(width: 30, height: 30)
-                        .padding(10)
-                        .background(Color.white.opacity(0.7))
-                        .cornerRadius(20)
                         
                         Spacer()
                         
@@ -70,10 +67,3 @@ struct DrawingView: View {
         isSharing = true
     }
 }
-
-struct DrawingView_Previews: PreviewProvider {
-    static var previews: some View {
-        DrawingView(image: Image("frames"))
-    }
-}
-
