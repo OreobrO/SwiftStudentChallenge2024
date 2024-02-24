@@ -8,13 +8,16 @@
 import SwiftUI
 
 struct DetailView: View {
-    let item: Item
-    
+    let badge: Badge
+    let fontWeights: [Font.Weight] = [.thin, .regular, .bold, .black]
+
     var body: some View {
-        AsyncImage(url: item.url) { image in
-            DrawingView(image: image)
- } placeholder: {
-            ProgressView()
-        }
+        Image(systemName: badge.symbol)
+            .resizable()
+            .fontWeight(fontWeights[badge.fontWeight])
+            .aspectRatio(contentMode: .fit)
+            .foregroundColor(changeArrayToColor(badge.color))
+            .padding(8)
+            .frame(width: 80, height: 80)
     }
 }

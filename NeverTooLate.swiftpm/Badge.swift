@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct Badge: Identifiable, Codable {
+struct Badge: Identifiable, Codable, Hashable {
     let id = UUID()
+    let name: String
     let symbol: String
-    let primary: [CGFloat]
-    let secondary: [CGFloat]
-    let tertiary: [CGFloat]
+    let color: [CGFloat]
+    let fontWeight: Int
 }
 
 extension Badge: Equatable {

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct GridView: View {
-    @EnvironmentObject var dataModel: DataModel
     @EnvironmentObject var badgeModel: BadgeModel
 
     private static let columns = 3
@@ -21,10 +20,10 @@ struct GridView: View {
         VStack {
             ScrollView {
                 LazyVGrid(columns: gridColumns) {
-                    ForEach(dataModel.items) { item in
+                    ForEach(badgeModel.badges) { badge in
                         GeometryReader { geo in
-                            NavigationLink(destination: DetailView(item: item)) {
-                                GridItemView(size: geo.size.width, item: item)
+                            NavigationLink(destination: DetailView(badge: badge)) {
+                                GridItemView(badge: badge)
                             }
                         }
                         .cornerRadius(8.0)
@@ -35,7 +34,7 @@ struct GridView: View {
                             if isEditing {
                                 Button {
                                     withAnimation {
-                                        dataModel.removeItem(item)
+                                        badgeModel.removeBadge(badge)
                                     }
                                 } label: {
                                     Image(systemName: "xmark.square.fill")
@@ -54,8 +53,7 @@ struct GridView: View {
         .navigationBarTitle("Template Gallery")
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $isAddingBadge) {
-//            PhotoPicker()
-            BadgeView().environmentObject(badgeModel)
+            BadgePickerView().environmentObject(badgeModel)
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -75,7 +73,7 @@ struct GridView: View {
 }
 
 struct GridView_Previews: PreviewProvider {   static var previews: some View {
-    GridView().environmentObject(DataModel())
+    GridView().environmentObject(BadgeModel())
         .previewDevice("iPad (8th generation)")
 }
 }

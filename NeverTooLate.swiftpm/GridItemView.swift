@@ -8,19 +8,17 @@
 import SwiftUI
 
 struct GridItemView: View {
-    let size: Double
-    let item: Item
+    let badge: Badge
+    let fontWeights: [Font.Weight] = [.thin, .regular, .bold, .black]
     
     var body: some View {
-        ZStack(alignment: .topTrailing) {
-            AsyncImage(url: item.url) { image in
-                image
-                    .resizable()
-                    .scaledToFill()
-            } placeholder: {
-                ProgressView()
-            }
-            .frame(width: size, height: size)
-        }
+        Image(systemName: badge.symbol)
+            .resizable()
+            .fontWeight(fontWeights[badge.fontWeight])
+            .aspectRatio(contentMode: .fit)
+            .foregroundColor(changeArrayToColor(badge.color))
+            .padding(8)
+            .frame(width: 80, height: 80)
     }
 }
+
