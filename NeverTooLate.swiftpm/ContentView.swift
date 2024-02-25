@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    
+    @EnvironmentObject var badgeModel: BadgeModel
     @State private var radiusToggle: Bool = false
     @State private var shadowToggle: Bool = false
     @State private var buttonShadowToggle: Bool = false
@@ -45,7 +45,7 @@ struct ContentView: View {
                             }
                         Spacer()
                         
-                        NavigationLink(destination: StoryView()) {
+                        NavigationLink(destination: StoryView().environmentObject(badgeModel)) {
                             Text("Start Dreaming")
                                 .bold()
                                 .foregroundColor(.black)

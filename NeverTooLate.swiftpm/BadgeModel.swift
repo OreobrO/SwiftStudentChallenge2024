@@ -18,6 +18,11 @@ class BadgeModel: ObservableObject {
     "house.fill",
     "globe.americas"
     ]
+    
+    @Published var selectedItems: [String] = []
+    @Published var firstSelectedItems: [String] = []
+    @Published var secondSelectedItems: [String] = []
+    @Published var thirdSelectedItems: [String] = []
 
     static let key = "savedBadges"
 
@@ -61,6 +66,48 @@ class BadgeModel: ObservableObject {
         }
 }
 
+let childhoodDreamJobs = [
+    "Astronaut",
+    "Firefighter",
+    "Doctor",
+    "Teacher",
+    "Police Officer",
+    "Actor/Actress",
+    "Professional Athlete",
+    "Artist",
+    "Veterinarian",
+    "Chef",
+    "Scientist",
+    "Pilot",
+    "Dancer",
+    "Engineer",
+    "Singer",
+    "Writer",
+    "Architect",
+    "Nurse",
+    "Superhero",
+    "Explorer",
+    "Paleontologist",
+    "Fashion Designer",
+    "Photographer",
+    "Journalist",
+    "Musician",
+    "Computer Programmer",
+    "Magician",
+    "Zookeeper",
+    "Race Car Driver",
+    "Fashion Model"
+]
+
+let bucketListHobbies = [
+    "Skydiving", "Scuba Diving", "Rock Climbing", "Bungee Jumping", "Hot Air Ballooning",
+    "Paragliding", "Surfing", "Skiing/Snowboarding", "Sailing", "Horseback Riding",
+    "Kayaking", "Whitewater Rafting", "Zip Lining", "Hang Gliding", "Windsurfing",
+    "Kiteboarding", "Mountain Biking", "Hiking the Appalachian Trail", "Backpacking through Europe",
+    "Learning a New Language", "Playing a Musical Instrument", "Photography", "Painting/Drawing",
+    "Cooking/Baking", "Gardening", "Yoga/Meditation", "Volunteering for a Cause", "Writing a Book",
+    "Traveling to Every Continent", "Learning to Fly a Plane"
+]
     
 //class BadgeModel: ObservableObject {
 //    

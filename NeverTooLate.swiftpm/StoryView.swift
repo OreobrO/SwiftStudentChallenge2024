@@ -9,6 +9,7 @@ import SwiftUI
 
 
 struct StoryView: View {
+    @EnvironmentObject var badgeModel: BadgeModel
     @State private var storyIndex = 0
     
     var body: some View {
@@ -49,7 +50,7 @@ struct StoryView: View {
                                 }
                         }
                         if storyIndex == 4 {
-                            NavigationLink(destination: QuestionView()) {
+                            NavigationLink(destination: QuestionView().environmentObject(badgeModel)) {
                                 Text("Let's Go!")
                                     .bold()
                                     .foregroundColor(.black)
