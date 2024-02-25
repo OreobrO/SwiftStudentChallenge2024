@@ -13,7 +13,6 @@ struct DrawingView: View {
     @State private var showingAlert = false
     @State private var pkCanvasView = PKCanvasView()
     @State private var isSharing = false
-    @State private var isBackgroundHiding = false
     
     let badge: Badge
     let fontWeights: [Font.Weight] = [.thin, .regular, .bold, .black]

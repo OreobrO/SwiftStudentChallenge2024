@@ -9,6 +9,7 @@ import SwiftUI
 
 class BadgeModel: ObservableObject {
     @Published var badges: [Badge] = []
+    @Published var tempBadge = Badge(name: "", symbol: "", color: [], fontWeight: 1)
     @Published var symbolList: [String] = [
     "figure.walk",
     "airplane",

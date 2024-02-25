@@ -23,9 +23,7 @@ struct GridView: View {
                 LazyVGrid(columns: gridColumns) {
                     ForEach(badgeModel.badges) { badge in
                         GeometryReader { geo in
-                            NavigationLink(destination: DrawingView(badge: badge)) {
-                                GridItemView(badge: badge)
-                            }
+                            GridItemView(badge: badge)
                         }
                         .cornerRadius(8.0)
                         .aspectRatio(1, contentMode: .fit)
@@ -87,7 +85,7 @@ struct GridView: View {
                     badgeModel.removeAll()
                     isEditing = false
                 }),
-                secondaryButton: .cancel{
+                secondaryButton: .cancel {
                     isEditing = false
                 }
             )

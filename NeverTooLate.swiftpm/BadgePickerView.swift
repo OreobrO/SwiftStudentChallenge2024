@@ -60,6 +60,11 @@ struct BadgePickerView: View {
                 isPresented = false
             }
             .padding()
+            
+            Button("Cancel") {
+                isPresented = false
+            }
+            .padding()
         }
     }
 }
