@@ -9,7 +9,6 @@ import SwiftUI
 
 class BadgeModel: ObservableObject {
     @Published var badges: [Badge] = []
-    @Published var tempBadge = Badge(name: "", symbol: "", color: [], fontWeight: 1)
     @Published var symbolList: [String] = [
     "figure.walk",
     "airplane",
@@ -19,13 +18,70 @@ class BadgeModel: ObservableObject {
     "globe.americas"
     ]
     
-    @Published var selectedItems: [String] = []
-    @Published var firstSelectedItems: [String] = []
-    @Published var secondSelectedItems: [String] = []
-    @Published var thirdSelectedItems: [String] = []
+    @Published var selectedItems: [Badge] = []
+    @Published var firstSelectedItems: [Badge] = []
+    @Published var secondSelectedItems: [Badge] = []
+    @Published var thirdSelectedItems: [Badge] = []
 
     static let key = "savedBadges"
-
+    @Published var firstBadgeList = [
+        Badge(name: "Astronaut", symbol: "figure.walk", color: [0.59, 1.00, 0.91], fontWeight: 1),
+        Badge(name: "Firefighter", symbol: "airplane", color: [0.48, 0.19, 0.30], fontWeight: 1),
+        Badge(name: "Doctor", symbol: "fan.fill", color: [0.62, 0.46, 0.57], fontWeight: 1),
+        Badge(name: "Teacher", symbol: "car", color: [0.24, 0.14, 0.18], fontWeight: 1),
+        Badge(name: "Police Officer", symbol: "house.fill", color: [0.54, 0.11, 0.81], fontWeight: 1),
+        Badge(name: "Actor/Actress", symbol: "globe.americas", color: [0.73, 0.54, 0.50], fontWeight: 1),
+        Badge(name: "Professional Athlete", symbol: "figure.walk", color: [0.87, 0.74, 0.89], fontWeight: 1),
+        Badge(name: "Artist", symbol: "airplane", color: [0.18, 0.34, 0.11], fontWeight: 1),
+        Badge(name: "Veterinarian", symbol: "fan.fill", color: [0.94, 0.32, 0.38], fontWeight: 1),
+        Badge(name: "Chef", symbol: "car", color: [0.76, 0.98, 0.59], fontWeight: 1),
+        Badge(name: "Scientist", symbol: "house.fill", color: [0.28, 0.51, 0.34], fontWeight: 1),
+        Badge(name: "Pilot", symbol: "globe.americas", color: [0.78, 0.13, 0.17], fontWeight: 1),
+        Badge(name: "Dancer", symbol: "figure.walk", color: [0.64, 0.14, 0.64], fontWeight: 1),
+        Badge(name: "Engineer", symbol: "airplane", color: [0.87, 0.58, 0.06], fontWeight: 1),
+        Badge(name: "Singer", symbol: "fan.fill", color: [0.20, 0.50, 0.48], fontWeight: 1),
+        Badge(name: "Writer", symbol: "car", color: [0.51, 0.09, 0.30], fontWeight: 1),
+        Badge(name: "Architect", symbol: "house.fill", color: [0.17, 0.70, 0.58], fontWeight: 1),
+        Badge(name: "Nurse", symbol: "globe.americas", color: [0.76, 0.79, 0.63], fontWeight: 1),
+        Badge(name: "Superhero", symbol: "figure.walk", color: [0.62, 0.22, 0.38], fontWeight: 1),
+        Badge(name: "Explorer", symbol: "airplane", color: [0.63, 0.73, 0.18], fontWeight: 1),
+        Badge(name: "Paleontologist", symbol: "fan.fill", color: [0.83, 0.59, 0.75], fontWeight: 1),
+        Badge(name: "Fashion Designer", symbol: "car", color: [0.12, 0.92, 0.09], fontWeight: 1)
+    ]
+    
+    @Published var secondBadgeList = [
+        Badge(name: "Skydiving", symbol: "figure.walk", color: [0.59, 1.00, 0.91], fontWeight: 1),
+        Badge(name: "Scuba Diving", symbol: "airplane", color: [0.48, 0.19, 0.30], fontWeight: 1),
+        Badge(name: "Rock Climbing", symbol: "fan.fill", color: [0.62, 0.46, 0.57], fontWeight: 1),
+        Badge(name: "Bungee Jumping", symbol: "car", color: [0.24, 0.14, 0.18], fontWeight: 1),
+        Badge(name: "Hot Air Ballooning", symbol: "house.fill", color: [0.54, 0.11, 0.81], fontWeight: 1),
+        Badge(name: "Paragliding", symbol: "globe.americas", color: [0.73, 0.54, 0.50], fontWeight: 1),
+        Badge(name: "Surfing", symbol: "figure.walk", color: [0.87, 0.74, 0.89], fontWeight: 1),
+        Badge(name: "Skiing/Snowboarding", symbol: "airplane", color: [0.18, 0.34, 0.11], fontWeight: 1),
+        Badge(name: "Sailing", symbol: "fan.fill", color: [0.94, 0.32, 0.38], fontWeight: 1),
+        Badge(name: "Horseback Riding", symbol: "car", color: [0.76, 0.98, 0.59], fontWeight: 1),
+        Badge(name: "Kayaking", symbol: "house.fill", color: [0.28, 0.51, 0.34], fontWeight: 1),
+        Badge(name: "Whitewater Rafting", symbol: "globe.americas", color: [0.78, 0.13, 0.17], fontWeight: 1),
+        Badge(name: "Zip Lining", symbol: "figure.walk", color: [0.64, 0.14, 0.64], fontWeight: 1),
+        Badge(name: "Hang Gliding", symbol: "airplane", color: [0.87, 0.58, 0.06], fontWeight: 1),
+        Badge(name: "Windsurfing", symbol: "fan.fill", color: [0.20, 0.50, 0.48], fontWeight: 1),
+        Badge(name: "Kiteboarding", symbol: "car", color: [0.51, 0.09, 0.30], fontWeight: 1),
+        Badge(name: "Mountain Biking", symbol: "house.fill", color: [0.17, 0.70, 0.58], fontWeight: 1),
+        Badge(name: "Hiking the Appalachian Trail", symbol: "globe.americas", color: [0.76, 0.79, 0.63], fontWeight: 1),
+        Badge(name: "Backpacking through Europe", symbol: "figure.walk", color: [0.62, 0.22, 0.38], fontWeight: 1),
+        Badge(name: "Learning a New Language", symbol: "airplane", color: [0.63, 0.73, 0.18], fontWeight: 1),
+        Badge(name: "Playing a Musical Instrument", symbol: "fan.fill", color: [0.83, 0.59, 0.75], fontWeight: 1),
+        Badge(name: "Photography", symbol: "car", color: [0.12, 0.92, 0.09], fontWeight: 1),
+        Badge(name: "Painting/Drawing", symbol: "house.fill", color: [0.65, 0.72, 0.32], fontWeight: 1),
+        Badge(name: "Cooking/Baking", symbol: "globe.americas", color: [0.48, 0.50, 0.78], fontWeight: 1),
+        Badge(name: "Gardening", symbol: "figure.walk", color: [0.85, 0.21, 0.84], fontWeight: 1),
+        Badge(name: "Yoga/Meditation", symbol: "airplane", color: [0.77, 0.99, 0.55], fontWeight: 1),
+        Badge(name: "Volunteering for a Cause", symbol: "fan.fill", color: [0.12, 0.98, 0.88], fontWeight: 1),
+        Badge(name: "Writing a Book", symbol: "car", color: [0.98, 0.89, 0.68], fontWeight: 1),
+        Badge(name: "Traveling to Every Continent", symbol: "house.fill", color: [0.66, 0.73, 0.16], fontWeight: 1),
+        Badge(name: "Learning to Fly a Plane", symbol: "globe.americas", color: [0.74, 0.83, 0.89], fontWeight: 1)
+    ]
+    
     init() {
         loadBadges()
     }
@@ -65,98 +121,3 @@ class BadgeModel: ObservableObject {
             badges = []
         }
 }
-
-let childhoodDreamJobs = [
-    "Astronaut",
-    "Firefighter",
-    "Doctor",
-    "Teacher",
-    "Police Officer",
-    "Actor/Actress",
-    "Professional Athlete",
-    "Artist",
-    "Veterinarian",
-    "Chef",
-    "Scientist",
-    "Pilot",
-    "Dancer",
-    "Engineer",
-    "Singer",
-    "Writer",
-    "Architect",
-    "Nurse",
-    "Superhero",
-    "Explorer",
-    "Paleontologist",
-    "Fashion Designer",
-    "Photographer",
-    "Journalist",
-    "Musician",
-    "Computer Programmer",
-    "Magician",
-    "Zookeeper",
-    "Race Car Driver",
-    "Fashion Model"
-]
-
-let bucketListHobbies = [
-    "Skydiving", "Scuba Diving", "Rock Climbing", "Bungee Jumping", "Hot Air Ballooning",
-    "Paragliding", "Surfing", "Skiing/Snowboarding", "Sailing", "Horseback Riding",
-    "Kayaking", "Whitewater Rafting", "Zip Lining", "Hang Gliding", "Windsurfing",
-    "Kiteboarding", "Mountain Biking", "Hiking the Appalachian Trail", "Backpacking through Europe",
-    "Learning a New Language", "Playing a Musical Instrument", "Photography", "Painting/Drawing",
-    "Cooking/Baking", "Gardening", "Yoga/Meditation", "Volunteering for a Cause", "Writing a Book",
-    "Traveling to Every Continent", "Learning to Fly a Plane"
-]
-    
-//class BadgeModel: ObservableObject {
-//    
-//    @Published var badges: [Badge] = [Badge(name: "Hello", symbol: "square.and.arrow.up", color: Color.red)]
-//    
-//    // Define the file URL where badges will be stored
-//    let badgesFileURL: URL
-//    
-//    init() {
-//        // Get the document directory URL
-//        if let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-//            self.badgesFileURL = documentDirectory.appendingPathComponent("badges.plist")
-//        } else {
-//            // Fallback URL
-//            self.badgesFileURL = URL(fileURLWithPath: "")
-//            print("Error: Couldn't determine document directory.")
-//        }
-//        
-//        // Load badges from disk
-//        loadBadges()
-//    }
-//    
-//    /// Load badges from disk
-//    func loadBadges() {
-//        if let data = try? Data(contentsOf: badgesFileURL) {
-//            if let loadedBadges = try? PropertyListDecoder().decode([Badge].self, from: data) {
-//                self.badges = loadedBadges
-//            }
-//        }
-//    }
-//    
-//    /// Save badges to disk
-//    func saveBadges() {
-//        if let data = try? PropertyListEncoder().encode(badges) {
-//            try? data.write(to: badgesFileURL)
-//        }
-//    }
-//    
-//    /// Adds a badge to the data collection and saves it to disk.
-//    func addBadge(_ badge: Badge) {
-//        badges.append(badge)
-//        saveBadges()
-//    }
-//    
-//    /// Removes a badge from the data collection and saves the updated collection to disk.
-//    func removeBadge(_ badge: Badge) {
-//        if let index = badges.firstIndex(of: badge) {
-//            badges.remove(at: index)
-//            saveBadges()
-//        }
-//    }
-//}
