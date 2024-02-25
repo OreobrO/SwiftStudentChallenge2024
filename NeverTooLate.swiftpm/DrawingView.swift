@@ -13,32 +13,39 @@ struct DrawingView: View {
     @State private var showingAlert = false
     @Binding var pkCanvasView: PKCanvasView
     @State private var isSharing = false
+    @Binding var drawingImage: UIImage?
     
     let badge: Badge
     let fontWeights: [Font.Weight] = [.thin, .regular, .bold, .black]
-
+    
     var body: some View {
-        
-        ZStack {
-            RoundedRectangle(cornerRadius: 20)
-                .foregroundColor(.white)
-                .shadow(color: Color(red: 0.8, green: 0.8, blue: 0.8, opacity: 0.5), radius: 8)
+        GeometryReader { geo in
             
+            ZStack {
+                Circle()
+                    .foregroundStyle(LinearGradient(colors: [.gray.opacity(0.1), .white], startPoint: .top, endPoint: .bottom))
+                Circle()
+                    .strokeBorder(lineWidth: geo.size.height / 10)
+                    .foregroundStyle(Color.badgeGradient1)
+                Circle()
+                    .strokeBorder(lineWidth: geo.size.height / 50)
+                    .foregroundStyle(Color.badgeGradient2)
                 Image(systemName: badge.symbol)
                     .resizable()
                     .fontWeight(fontWeights[badge.fontWeight])
                     .aspectRatio(contentMode: .fit)
                     .foregroundColor(changeArrayToColor(badge.color))
                     .padding(8)
-                    .frame(width: 200, height: 200)
-            
-            GeometryReader { geo in
+                    .aspectRatio(contentMode: .fit)
+                    .scaleEffect(0.4)
                 PKCanvas(canvasView: $pkCanvasView)
-                    .frame(width: geo.size.width, height: geo.size.height)
-                    .cornerRadius(20)
-                
-                VStack(alignment: .trailing) {
+                    .frame(width: geo.size.height * 8 / 10, height: geo.size.height * 8 / 10)
+                    .cornerRadius(geo.size.height)
+                VStack {
                     HStack {
+                        Button(action: saveDrawing) {
+                            Image(systemName: "arrow.up")
+                        }
                         
                         Spacer()
                         
@@ -49,13 +56,14 @@ struct DrawingView: View {
                             ShareSheet(
                                 activityItems: [image],
                                 excludedActivityTypes: [])
+                            
                         }
                         .frame(width: 30, height: 30)
                         .padding(10)
                         .background(Color.white.opacity(0.7))
                         .cornerRadius(20)
                     }
-                    .padding(20)
+                    Spacer()
                 }
             }
         }
@@ -64,5 +72,9 @@ struct DrawingView: View {
     
     func shareDrawing() {
         isSharing = true
+    }
+    func saveDrawing() {
+        let image = pkCanvasView.drawing.image(from: pkCanvasView.bounds, scale: UIScreen.main.scale)
+        drawingImage = image
     }
 }

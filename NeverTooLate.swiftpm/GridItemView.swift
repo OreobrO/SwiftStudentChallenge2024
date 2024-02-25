@@ -11,6 +11,7 @@ import PencilKit
 struct GridItemView: View {
     @EnvironmentObject var badgeModel: BadgeModel
     @State private var pkCanvasView = PKCanvasView()
+    @State private var drawingImage: UIImage?
 
     let badge: Badge
     let fontWeights: [Font.Weight] = [.thin, .regular, .bold, .black]
@@ -37,9 +38,10 @@ struct GridItemView: View {
                     .padding(8)
                     .aspectRatio(contentMode: .fit)
                     .scaleEffect(0.4)
-                PKCanvas(canvasView: $pkCanvasView)
+                Image(uiImage: drawingImage ?? UIImage())
+                    .resizable()
                     .frame(width: geo.size.height * 8 / 10, height: geo.size.height * 8 / 10)
-                    .cornerRadius(geo.size.width)
+                    .cornerRadius(20)
                 ZStack {
                     Circle()
                         .foregroundStyle(Color.badgeGradient1)
@@ -59,7 +61,7 @@ struct GridItemView: View {
             .overlay(alignment: .top) {
                 if isEditing {
                     HStack {
-                        NavigationLink(destination: DrawingView(pkCanvasView: $pkCanvasView, badge: badge)) {
+                        NavigationLink(destination: DrawingView(pkCanvasView: $pkCanvasView, drawingImage: $drawingImage, badge: badge)) {
                             Image(systemName: "pencil.circle.fill")
                                 .font(Font.title)
                                 .symbolRenderingMode(.palette)
