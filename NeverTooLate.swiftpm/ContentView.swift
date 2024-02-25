@@ -19,7 +19,7 @@ struct ContentView: View {
                 ZStack {
                     Rectangle()
                         .fill(RadialGradient(
-                            gradient: Gradient(colors: [.white, Color(hex: 0xABABAB)]),
+                            gradient: Gradient(colors: [.white, Color(hex: 0x6F6F6F)]),
                             center: .top,
                             startRadius: radiusToggle ? 500 : 300,
                             endRadius: radiusToggle ? 1800 : 900))
@@ -45,7 +45,7 @@ struct ContentView: View {
                             }
                         Spacer()
                         
-                        NavigationLink(destination: Story1View()) {
+                        NavigationLink(destination: StoryView()) {
                             Text("Start Dreaming")
                                 .bold()
                                 .foregroundColor(.black)
@@ -65,91 +65,12 @@ struct ContentView: View {
                     }
                     .frame(height: geo.size.height * 0.8)
                     .offset(y: -50)
-
-                }
-            }
-        }
-    }
-}
-
-struct Story1View: View {
-    var body: some View {
-        GeometryReader { geo in
-            ZStack {
-                Rectangle()
-                    .fill(RadialGradient(
-                        gradient: Gradient(colors: [.white, Color(hex: 0xABABAB)]),
-                        center: .top,
-                        startRadius: 500,
-                        endRadius: 1800))
-                    .edgesIgnoringSafeArea(.all)
-                
-                VStack {
-                    Spacer()
                     
-                    NavigationLink(destination: Story2View()) {
-                        Text("Start Dreaming")
-                            .bold()
-                            .foregroundColor(.black)
-                            .padding()
-                            .background(
-                                RoundedRectangle(cornerRadius: 100)
-                                    .fill(Color.white)
-                                    .shadow(color: .gray, radius: 8, x: 0, y: 4)
-                            )
-                    }
-                    .offset(y: -50)
                 }
             }
-            .navigationTitle("Story 1")
         }
     }
 }
-
-struct Story2View: View {
-    var body: some View {
-        VStack {
-            Text("This is Story 2")
-                .padding()
-            
-            NavigationLink(destination: Question1View()) {
-                Text("Continue to Question 1")
-                    .padding()
-            }
-        }
-        .navigationTitle("Story 2")
-    }
-}
-
-struct Question1View: View {
-    var body: some View {
-        VStack {
-            Text("This is Question 1")
-                .padding()
-            
-            NavigationLink(destination: Question2View()) {
-                Text("Continue to Question 2")
-                    .padding()
-            }
-        }
-        .navigationTitle("Question 1")
-    }
-}
-
-struct Question2View: View {
-    var body: some View {
-        Text("This is Question 2")
-            .padding()
-            .navigationTitle("Question 2")
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
-
 
 #Preview {
     ContentView()
