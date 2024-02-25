@@ -23,27 +23,13 @@ struct GridView: View {
                 LazyVGrid(columns: gridColumns) {
                     ForEach(badgeModel.badges) { badge in
                         GeometryReader { geo in
-                            GridItemView(badge: badge)
+                            GridItemView(badge: badge, isEditing: $isEditing)
+                                .environmentObject(badgeModel)
                         }
                         .cornerRadius(8.0)
                         .aspectRatio(1, contentMode: .fit)
                         .shadow(color: Color(red: 0.8, green: 0.8, blue: 0.8, opacity: 0.5), radius: 8)
                         .padding()
-                        .overlay(alignment: .topTrailing) {
-                            if isEditing {
-                                Button {
-                                    withAnimation {
-                                        badgeModel.removeBadge(badge)
-                                    }
-                                } label: {
-                                    Image(systemName: "xmark.square.fill")
-                                        .font(Font.title)
-                                        .symbolRenderingMode(.palette)
-                                        .foregroundStyle(.white, .red)
-                                }
-                                .offset(x: 2, y: 0)
-                            }
-                        }
                     }
                 }
                 .padding()

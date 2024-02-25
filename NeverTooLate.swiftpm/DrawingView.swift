@@ -11,7 +11,7 @@ import PencilKit
 struct DrawingView: View {
     @EnvironmentObject var badgeModel: BadgeModel
     @State private var showingAlert = false
-    @State private var pkCanvasView = PKCanvasView()
+    @Binding var pkCanvasView: PKCanvasView
     @State private var isSharing = false
     
     let badge: Badge
