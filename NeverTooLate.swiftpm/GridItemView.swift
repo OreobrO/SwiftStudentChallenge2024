@@ -53,6 +53,7 @@ struct GridItemView: View {
                     Circle()
                         .foregroundStyle(Color.badgeGradient1)
                     Text(badge.name)
+                        .font(.body)
                         .foregroundStyle(.black)
                         .rotation3DEffect(
                             Angle(degrees: 180),
@@ -145,8 +146,19 @@ struct GridItemView: View {
                 }
             }
         }
-        .offset(y: floatingAnimation ? -15 : 0)
         .frame(width: 160, height: 160)
+        .rotation3DEffect(
+            Angle(degrees: [1, 4, 6, 11].contains(badgeModel.selectedBadges.lastIndex(of: badge)!) ? 30 : 0),
+            axis: (x: 0.3, y: 1.0, z: 0.0), perspective: 0
+        )
+        .rotationEffect([1, 4, 6, 11].contains(badgeModel.selectedBadges.lastIndex(of: badge)!) ? Angle(degrees: -15) : .degrees(0))
+        .rotation3DEffect(
+            Angle(degrees: [5, 7, 10].contains(badgeModel.selectedBadges.lastIndex(of: badge)!) ? -25 : 0),
+            axis: (x: 0.3, y: 1.0, z: 0.0), perspective: 0
+        )
+        .rotationEffect([5, 7, 10].contains(badgeModel.selectedBadges.lastIndex(of: badge)!) ? Angle(degrees: 25) : .degrees(0))
+        .offset(y: floatingAnimation ? -20 : 0)
+        
     }
 }
 

@@ -81,6 +81,37 @@ class BadgeModel: ObservableObject {
         Badge(name: "Learning to Fly a Plane", symbol: "globe.americas", color: [0.74, 0.83, 0.89], fontWeight: 1)
     ]
     
+    @Published var thirdBadgeList = [
+        Badge(name: "Coding", symbol: "figure.walk", color: [0.59, 1.00, 0.91], fontWeight: 1),
+        Badge(name: "Communication Skills", symbol: "airplane", color: [0.48, 0.19, 0.30], fontWeight: 1),
+        Badge(name: "Academics", symbol: "fan.fill", color: [0.62, 0.46, 0.57], fontWeight: 1),
+        Badge(name: "Public Speaking", symbol: "car", color: [0.24, 0.14, 0.18], fontWeight: 1),
+        Badge(name: "Financial Literacy", symbol: "house.fill", color: [0.54, 0.11, 0.81], fontWeight: 1),
+        Badge(name: "Problem Solving", symbol: "globe.americas", color: [0.73, 0.54, 0.50], fontWeight: 1),
+        Badge(name: "Time Management", symbol: "figure.walk", color: [0.87, 0.74, 0.89], fontWeight: 1),
+        Badge(name: "Leadership Skills", symbol: "airplane", color: [0.18, 0.34, 0.11], fontWeight: 1),
+        Badge(name: "Emotional Intelligence", symbol: "fan.fill", color: [0.94, 0.32, 0.38], fontWeight: 1),
+        Badge(name: "Critical Thinking", symbol: "car", color: [0.76, 0.98, 0.59], fontWeight: 1),
+        Badge(name: "Learning New Technologies", symbol: "house.fill", color: [0.28, 0.51, 0.34], fontWeight: 1),
+        Badge(name: "Project Management", symbol: "globe.americas", color: [0.78, 0.13, 0.17], fontWeight: 1),
+        Badge(name: "Negotiation Skills", symbol: "figure.walk", color: [0.64, 0.14, 0.64], fontWeight: 1),
+        Badge(name: "Creative Thinking", symbol: "airplane", color: [0.87, 0.58, 0.06], fontWeight: 1),
+        Badge(name: "Stress Management", symbol: "fan.fill", color: [0.20, 0.50, 0.48], fontWeight: 1),
+        Badge(name: "Health & Wellness", symbol: "car", color: [0.51, 0.09, 0.30], fontWeight: 1),
+        Badge(name: "Learning New Languages", symbol: "house.fill", color: [0.17, 0.70, 0.58], fontWeight: 1),
+        Badge(name: "Artificial Intelligence", symbol: "globe.americas", color: [0.76, 0.79, 0.63], fontWeight: 1),
+        Badge(name: "Machine Learning", symbol: "figure.walk", color: [0.62, 0.22, 0.38], fontWeight: 1),
+        Badge(name: "Data Analytics", symbol: "airplane", color: [0.63, 0.73, 0.18], fontWeight: 1),
+        Badge(name: "Web Development", symbol: "fan.fill", color: [0.83, 0.59, 0.75], fontWeight: 1),
+        Badge(name: "Mobile App Development", symbol: "car", color: [0.12, 0.92, 0.09], fontWeight: 1),
+        Badge(name: "UI/UX Design", symbol: "house.fill", color: [0.65, 0.72, 0.32], fontWeight: 1),
+        Badge(name: "Digital Marketing", symbol: "globe.americas", color: [0.48, 0.50, 0.78], fontWeight: 1),
+        Badge(name: "Content Writing", symbol: "figure.walk", color: [0.85, 0.21, 0.84], fontWeight: 1),
+        Badge(name: "Blogging", symbol: "airplane", color: [0.77, 0.99, 0.55], fontWeight: 1),
+        Badge(name: "Photography & Videography", symbol: "fan.fill", color: [0.12, 0.98, 0.88], fontWeight: 1),
+        Badge(name: "Personal Branding", symbol: "car", color: [0.98, 0.89, 0.68], fontWeight: 1),
+    ]
+
     init() {
         loadBadges()
     }

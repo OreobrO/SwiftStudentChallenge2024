@@ -14,6 +14,9 @@ struct MyApp: App {
         WindowGroup {
             NavigationStack {
                 ContentView()
+                    .onAppear {
+                        badgeModel.removeAll()
+                    }
             }
             .environmentObject(badgeModel)
             .environmentObject(colorPickerModel)

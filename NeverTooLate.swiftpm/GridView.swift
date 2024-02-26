@@ -16,14 +16,22 @@ struct GridView: View {
     @State private var gridColumns = Array(repeating: GridItem(.flexible()), count: columns)
     @State private var isPresentingShareSheet = false
     @State private var capturedImage: UIImage?
+    @State private var instructionStarted = false
+    @State private var instructionEnded = false
     
     let badgePosition: [CGPoint] = [
-        CGPoint(x: 0, y: -200),
-        CGPoint(x: 100, y: -300),
-        CGPoint(x: -200, y: -400),
-        CGPoint(x: 300, y: -550),
-        CGPoint(x: -300, y: -600),
-        CGPoint(x: 400, y: -600),
+        CGPoint(x: -60, y: -280),
+        CGPoint(x: -200, y: -200),
+        CGPoint(x: 140, y: -230),
+        CGPoint(x: 0, y: -150),
+        CGPoint(x: -160, y: -400),
+        CGPoint(x: 100, y: -380),
+        CGPoint(x: -300, y: -350),
+        CGPoint(x: 280, y: -290),
+        CGPoint(x: -80, y: -540),
+        CGPoint(x: 230, y: -510),
+        CGPoint(x: -240, y: -640),
+        CGPoint(x: 120, y: -630),
     ]
     
     var body: some View {
@@ -111,14 +119,14 @@ struct GridView: View {
                                 .padding(32)
                         } else {
                             Image(systemName: "pencil")
-                                .foregroundStyle(.teal)
+                                .foregroundStyle(instructionStarted ? .white : .teal)
                                 .bold()
                                 .font(.system(size: 32))
                                 .padding()
                                 .background {
                                     Circle()
                                         .frame(width: 60)
-                                        .foregroundStyle(Color.white)
+                                        .foregroundStyle(instructionStarted ? Color.teal.opacity(0.8) : Color.white)
                                         .shadow(color: .gray, radius: 8, x: 0, y: 4)
                                 }
                                 .padding(32)
@@ -126,8 +134,6 @@ struct GridView: View {
                     }
                 }
             }
-            .navigationBarTitle("Template Gallery")
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     HStack {
@@ -158,6 +164,38 @@ struct GridView: View {
                         ShareSheet(activityItems: [image])
                     }
                 })
+            
+            VStack {
+                Text("IT'S NEVER TOO LATE!")
+                    .font(Font.custom("Cinzel-Bold", size: 60)).foregroundColor(.black)
+                    .shadow(radius: 7, x: 0, y: 10)
+                Text(instructionEnded ? "Never give up on your dreams and good luck~" : "")
+                    .font(Font.custom("Cinzel-Bold", size: 30)).foregroundColor(.black)
+                    .shadow(radius: 7, x: 0, y: 10)
+                Spacer()
+                HStack {
+                    Image("me")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 200)
+                    Text(instructionStarted ? "Click the pencil to draw anything!\nYou can even change the colors" : "Click the badge to flip!")
+                        .font(Font.custom("Cinzel-Bold", size: 30)).foregroundColor(.black)
+                        .shadow(radius: 7, x: 0, y: 10)
+                    Spacer()
+                }
+            }
+        }
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                withAnimation(.easeInOut(duration: 0.5)) {
+                    instructionStarted = true
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        instructionEnded = true
+                    }
+                }
+            }
         }
     }
     

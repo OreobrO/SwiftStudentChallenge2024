@@ -68,7 +68,6 @@ struct ContentView: View {
                     }
                     .frame(height: geo.size.height * 0.8)
                     .offset(y: -50)
-                    
                 }
             }
         }
