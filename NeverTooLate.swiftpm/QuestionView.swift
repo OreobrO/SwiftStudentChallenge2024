@@ -265,7 +265,7 @@ struct Question3View: View {
                     .ignoresSafeArea()
                 
                 VStack {
-                    Text("3rd")
+                    Text("What do you want to learn?")
                         .font(Font.custom("Cinzel-Bold", size: 60))
                         .foregroundColor(.white)
                         .shadow(radius: 7, y: 10)
