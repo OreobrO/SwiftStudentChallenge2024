@@ -116,6 +116,7 @@ struct QuestionView: View {
                         .background(Color.black.opacity(0.7).cornerRadius(16))
                         Spacer()
                     }
+                    .padding()
                     .opacity(instructionStarted ? 1 : 0)
                     .onAppear{
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
@@ -243,6 +244,7 @@ struct Question2View: View {
                         .background(Color.black.opacity(0.7).cornerRadius(16))
                         Spacer()
                     }
+                    .padding()
                     .opacity(instructionStarted ? 1 : 0)
                     .onAppear{
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
@@ -367,6 +369,7 @@ struct Question3View: View {
                                 .shadow(radius: 7, x: 0, y: 10)
                                 .padding()
                         }
+                        .padding()
                         .background(Color.black.opacity(0.7).cornerRadius(16))
                         Spacer()
                     }
