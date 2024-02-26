@@ -113,7 +113,7 @@ struct QuestionView: View {
                                 .shadow(radius: 7, x: 0, y: 10)
                                 .padding()
                         }
-                        .background(Color.black.opacity(0.4).cornerRadius(16))
+                        .background(Color.black.opacity(0.7).cornerRadius(16))
                         Spacer()
                     }
                     .opacity(instructionStarted ? 1 : 0)
@@ -240,7 +240,7 @@ struct Question2View: View {
                                 .shadow(radius: 7, x: 0, y: 10)
                                 .padding()
                         }
-                        .background(Color.black.opacity(0.4).cornerRadius(16))
+                        .background(Color.black.opacity(0.7).cornerRadius(16))
                         Spacer()
                     }
                     .opacity(instructionStarted ? 1 : 0)
@@ -367,7 +367,7 @@ struct Question3View: View {
                                 .shadow(radius: 7, x: 0, y: 10)
                                 .padding()
                         }
-                        .background(Color.black.opacity(0.4).cornerRadius(16))
+                        .background(Color.black.opacity(0.7).cornerRadius(16))
                         Spacer()
                     }
                     .opacity(instructionStarted ? 1 : 0)
