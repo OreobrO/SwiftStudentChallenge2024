@@ -21,7 +21,7 @@ struct GridView: View {
         VStack {
             ScrollView {
                 LazyVGrid(columns: gridColumns) {
-                    ForEach(badgeModel.badges) { badge in
+                    ForEach(badgeModel.selectedBadges) { badge in
                         GeometryReader { geo in
                             GridItemView(badge: badge, isEditing: $isEditing)
                                 .environmentObject(badgeModel)

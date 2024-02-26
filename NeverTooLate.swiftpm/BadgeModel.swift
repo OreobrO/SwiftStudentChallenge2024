@@ -8,7 +8,6 @@
 import SwiftUI
 
 class BadgeModel: ObservableObject {
-    @Published var badges: [Badge] = []
     @Published var symbolList: [String] = [
     "figure.walk",
     "airplane",
@@ -18,10 +17,10 @@ class BadgeModel: ObservableObject {
     "globe.americas"
     ]
     
-    @Published var selectedItems: [Badge] = []
-    @Published var firstSelectedItems: [Badge] = []
-    @Published var secondSelectedItems: [Badge] = []
-    @Published var thirdSelectedItems: [Badge] = []
+    @Published var selectedBadges: [Badge] = []
+    @Published var firstSelectedBadges: [Badge] = []
+    @Published var secondSelectedBadges: [Badge] = []
+    @Published var thirdSelectedBadges: [Badge] = []
 
     static let key = "savedBadges"
     @Published var firstBadgeList = [
@@ -88,7 +87,7 @@ class BadgeModel: ObservableObject {
 
     func saveBadges() {
         do {
-            let data = try JSONEncoder().encode(badges)
+            let data = try JSONEncoder().encode(selectedBadges)
             UserDefaults.standard.set(data, forKey: BadgeModel.key)
         } catch {
             print("Error saving badges: \(error.localizedDescription)")
@@ -98,7 +97,7 @@ class BadgeModel: ObservableObject {
     func loadBadges() {
         if let data = UserDefaults.standard.data(forKey: BadgeModel.key) {
             do {
-                badges = try JSONDecoder().decode([Badge].self, from: data)
+                selectedBadges = try JSONDecoder().decode([Badge].self, from: data)
             } catch {
                 print("Error loading badges: \(error.localizedDescription)")
             }
@@ -106,18 +105,44 @@ class BadgeModel: ObservableObject {
     }
 
     func addBadge(_ badge: Badge) {
-        badges.append(badge)
+        selectedBadges.append(badge)
         saveBadges()
     }
 
     func removeBadge(_ badge: Badge) {
-        if let index = badges.firstIndex(of: badge) {
-            badges.remove(at: index)
+        if let index = selectedBadges.firstIndex(of: badge) {
+            selectedBadges.remove(at: index)
             saveBadges()
         }
     }
     
     func removeAll() {
-            badges = []
+        selectedBadges = []
         }
+}
+
+func changeColorToArray(_ color: Color) -> [CGFloat] {
+    let uiColor = UIColor(color)
+    
+    var red: CGFloat = 0
+    var green: CGFloat = 0
+    var blue: CGFloat = 0
+    var alpha: CGFloat = 0
+    uiColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+    
+    return [red, green, blue, alpha]
+}
+
+func changeArrayToColor(_ array: [CGFloat]) -> Color {
+    guard array.count >= 3 else {
+        return Color.black
+    }
+    
+    let red = array[0]
+    let green = array[1]
+    let blue = array[2]
+    
+    let alpha: CGFloat = array.count > 3 ? array[3] : 1.0
+    
+    return Color(red: Double(red), green: Double(green), blue: Double(blue), opacity: Double(alpha))
 }

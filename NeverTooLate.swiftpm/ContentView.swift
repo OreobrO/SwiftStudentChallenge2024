@@ -33,6 +33,7 @@ struct ContentView: View {
                     Image("main")
                         .resizable()
                         .scaledToFit()
+                        .frame(width: geo.size.width * 0.5)
                     
                     VStack {
                         Text("NEVER TOO LATE")
