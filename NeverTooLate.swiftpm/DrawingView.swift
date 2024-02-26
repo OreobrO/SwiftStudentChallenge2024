@@ -74,34 +74,12 @@ struct DrawingView: View {
                         Spacer()
                             .frame(height: 100)
                     }
-                    
-                    VStack {
-                        HStack {
-                            Button(action: saveDrawing) {
-                                Image(systemName: "arrow.up")
-                            }
-                            
-                            Spacer()
-                            
-                            Button(action: shareDrawing) {
-                                Image(systemName: "square.and.arrow.up")
-                            }.sheet(isPresented: $isSharing) {
-                                let image = pkCanvasView.drawing.image(from: pkCanvasView.bounds, scale: UIScreen.main.scale)
-                                ShareSheet(
-                                    activityItems: [image],
-                                    excludedActivityTypes: [])
-                                
-                            }
-                            .frame(width: 30, height: 30)
-                            .padding(10)
-                            .background(Color.white.opacity(0.7))
-                            .cornerRadius(20)
-                        }
-                        Spacer()
-                    }
                 }
                 .padding(32)
             }
+        }
+        .onDisappear {
+            saveDrawing()
         }
     }
     
@@ -147,7 +125,6 @@ extension DrawingView {
                             if let index = badgeModel.selectedBadges.lastIndex(of: badge) {
                                 badgeModel.selectedBadges[index].color = colorPickerModel.pickerValueToColor(value: colorPickerModel.pickerValue)
                             }
-//                            print(colorPickerModel.pickerValue)
                             withAnimation(.easeInOut(duration: 0.2)) {
                                 colorPickerSize = 0
                                 colorPickerOpacity = true
@@ -170,9 +147,3 @@ extension DrawingView {
         colorPickerModel.pickerValue = min(max(Double(newValue), 0), 1)
     }
 }
-//
-//extension DrawingView {
-//    var weightPickerView: some View {
-//        
-//    }
-//}

@@ -19,6 +19,8 @@ struct GridItemView: View {
     let fontWeights: [Font.Weight] = [.thin, .regular, .bold, .black]
     @State private var rotationEffect = false
     @State private var isFlipped = false
+    @State private var floatingAnimation = false
+    
     @Binding var isEditing: Bool
     @Binding var isDrawEditing: Bool
     
@@ -68,12 +70,6 @@ struct GridItemView: View {
                             .foregroundStyle(Color.white.opacity(0.3))
                     }
                 }
-            }
-            .rotation3DEffect(
-                Angle(degrees: rotationEffect ? 180 : 0),
-                axis: (x: 0.0, y: 1.0, z: 0.0)
-            )
-            .overlay(alignment: .center) {
                 if isEditing {
                     Button {
                         withAnimation {
@@ -87,6 +83,7 @@ struct GridItemView: View {
                                 .font(.system(size: 24))
                                 .symbolRenderingMode(.palette)
                                 .foregroundStyle(.white, .red)
+                                .opacity(0.7)
                         }
                     }
                 } else if isDrawEditing {
@@ -99,12 +96,36 @@ struct GridItemView: View {
                             .font(.system(size: 24))
                             .symbolRenderingMode(.palette)
                             .foregroundStyle(.white, .gray)
+                            .opacity(0.5)
                     }
                     .simultaneousGesture(TapGesture().onEnded {
                         isDrawEditing = false
                     })
                 }
             }
+            .onAppear {
+                if [1, 3, 5].contains(badgeModel.selectedBadges.lastIndex(of: badge)!) {
+                    withAnimation(.easeInOut(duration: 1).repeatForever()) {
+                        floatingAnimation.toggle()
+                    }
+                } else if [1, 3, 5].contains(badgeModel.selectedBadges.lastIndex(of: badge)!) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        withAnimation(.easeInOut(duration: 1).repeatForever()) {
+                            floatingAnimation.toggle()
+                        }
+                    }
+                } else {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                        withAnimation(.easeInOut(duration: 1).repeatForever()) {
+                            floatingAnimation.toggle()
+                        }
+                    }
+                }
+            }
+            .rotation3DEffect(
+                Angle(degrees: rotationEffect ? 180 : 0),
+                axis: (x: 0.0, y: 1.0, z: 0.0)
+            )
             .onTapGesture {
                 if !isDrawEditing {
                     withAnimation(.easeInOut(duration: 0.3)) {
@@ -124,6 +145,8 @@ struct GridItemView: View {
                 }
             }
         }
+        .offset(y: floatingAnimation ? -15 : 0)
+        .frame(width: 160, height: 160)
     }
 }
 
