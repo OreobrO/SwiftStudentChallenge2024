@@ -103,13 +103,17 @@ struct QuestionView: View {
                 VStack {
                     Spacer()
                     HStack {
-                        Image("me")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 200)
-                        Text("I've always wanted to be an Architect")
-                            .font(Font.custom("Cinzel-Bold", size: 30)).foregroundColor(.white)
-                            .shadow(radius: 7, x: 0, y: 10)
+                        HStack {
+                            Image("me")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 200)
+                            Text("I've always wanted to be an Architect")
+                                .font(Font.custom("Cinzel-Bold", size: 30)).foregroundColor(.white)
+                                .shadow(radius: 7, x: 0, y: 10)
+                                .padding()
+                        }
+                        .background(Color.black.opacity(0.4).cornerRadius(16))
                         Spacer()
                     }
                     .opacity(instructionStarted ? 1 : 0)
@@ -226,13 +230,17 @@ struct Question2View: View {
                 VStack {
                     Spacer()
                     HStack {
-                        Image("me")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 200)
-                        Text("I really like running and swimming")
-                            .font(Font.custom("Cinzel-Bold", size: 30)).foregroundColor(.white)
-                            .shadow(radius: 7, x: 0, y: 10)
+                        HStack {
+                            Image("me")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 200)
+                            Text("I really like running and swimming")
+                                .font(Font.custom("Cinzel-Bold", size: 30)).foregroundColor(.white)
+                                .shadow(radius: 7, x: 0, y: 10)
+                                .padding()
+                        }
+                        .background(Color.black.opacity(0.4).cornerRadius(16))
                         Spacer()
                     }
                     .opacity(instructionStarted ? 1 : 0)
@@ -349,13 +357,17 @@ struct Question3View: View {
                 VStack {
                     Spacer()
                     HStack {
-                        Image("me")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 200)
-                        Text("I would like to learn everything about Swift")
-                            .font(Font.custom("Cinzel-Bold", size: 30)).foregroundColor(.white)
-                            .shadow(radius: 7, x: 0, y: 10)
+                        HStack {
+                            Image("me")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 200)
+                            Text("I would like to learn everything about Swift")
+                                .font(Font.custom("Cinzel-Bold", size: 30)).foregroundColor(.white)
+                                .shadow(radius: 7, x: 0, y: 10)
+                                .padding()
+                        }
+                        .background(Color.black.opacity(0.4).cornerRadius(16))
                         Spacer()
                     }
                     .opacity(instructionStarted ? 1 : 0)
