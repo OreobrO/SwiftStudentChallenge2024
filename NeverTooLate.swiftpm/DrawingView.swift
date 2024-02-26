@@ -72,7 +72,7 @@ struct DrawingView: View {
                         .padding()
                         
                         Spacer()
-                            .frame(height: 64)
+                            .frame(height: 100)
                     }
                     
                     VStack {
