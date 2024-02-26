@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var badgeModel: BadgeModel
+    @EnvironmentObject var colorPickerModel: ColorPickerModel
+
     @State private var radiusToggle: Bool = false
     @State private var shadowToggle: Bool = false
     @State private var buttonShadowToggle: Bool = false

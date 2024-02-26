@@ -11,8 +11,8 @@ struct GridView: View {
     @EnvironmentObject var badgeModel: BadgeModel
     
     private static let columns = 3
-    @State private var isAddingBadge = false
     @State private var isEditing = false
+    @State private var isDrawEditing = false
     @State private var showingDeleteAlert = false
     
     @State private var gridColumns = Array(repeating: GridItem(.flexible()), count: columns)
@@ -23,7 +23,7 @@ struct GridView: View {
                 LazyVGrid(columns: gridColumns) {
                     ForEach(badgeModel.selectedBadges) { badge in
                         GeometryReader { geo in
-                            GridItemView(badge: badge, isEditing: $isEditing)
+                            GridItemView(badge: badge, isEditing: $isEditing, isDrawEditing: $isDrawEditing)
                                 .environmentObject(badgeModel)
                         }
                         .cornerRadius(8.0)
@@ -37,9 +37,6 @@ struct GridView: View {
         }
         .navigationBarTitle("Template Gallery")
         .navigationBarTitleDisplayMode(.inline)
-        .sheet(isPresented: $isAddingBadge) {
-            BadgePickerView(isPresented: $isAddingBadge).environmentObject(badgeModel)
-        }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(isEditing ? "Done" : "Edit") {
@@ -51,14 +48,14 @@ struct GridView: View {
                     if isEditing {
                         showingDeleteAlert = true
                     } else {
-                        isAddingBadge = true
+                        isDrawEditing = true
                     }
                 } label: {
                     if isEditing {
                         Text("Delete all")
                             .foregroundStyle(.red)
                     } else {
-                        Image(systemName: "plus")
+                        Image(systemName: "pencil")
                     }
                 }
             }

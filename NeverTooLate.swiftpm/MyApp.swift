@@ -3,6 +3,7 @@ import SwiftUI
 @main
 struct MyApp: App {
     @StateObject var badgeModel = BadgeModel()
+    @StateObject var colorPickerModel = ColorPickerModel()
 
     init() {
         CustomFont.registerFonts(fontName: "Cinzel-Bold")
@@ -15,6 +16,7 @@ struct MyApp: App {
                 ContentView()
             }
             .environmentObject(badgeModel)
+            .environmentObject(colorPickerModel)
             .navigationViewStyle(.stack)
         }
     }

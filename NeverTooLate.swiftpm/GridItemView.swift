@@ -10,14 +10,17 @@ import PencilKit
 
 struct GridItemView: View {
     @EnvironmentObject var badgeModel: BadgeModel
+    @EnvironmentObject var colorPickerModel: ColorPickerModel
+    
     @State private var pkCanvasView = PKCanvasView()
     @State private var drawingImage: UIImage?
-
+    
     let badge: Badge
     let fontWeights: [Font.Weight] = [.thin, .regular, .bold, .black]
     @State private var rotationEffect = false
     @State private var isFlipped = false
     @Binding var isEditing: Bool
+    @Binding var isDrawEditing: Bool
     
     var body: some View {
         GeometryReader { geo in
@@ -53,24 +56,24 @@ struct GridItemView: View {
                         )
                 }
                 .opacity(isFlipped ? 1 : 0)
+                if isDrawEditing {
+                    NavigationLink(destination:
+                                    DrawingView(pkCanvasView: $pkCanvasView, drawingImage: $drawingImage, badge: badge)
+                        .environmentObject(badgeModel)
+                        .environmentObject(colorPickerModel)
+                    ) {
+                        Color.clear
+                    }
+                }
             }
             .rotation3DEffect(
                 Angle(degrees: rotationEffect ? 180 : 0),
                 axis: (x: 0.0, y: 1.0, z: 0.0)
             )
             .overlay(alignment: .top) {
-                if isEditing {
-                    HStack {
-                        NavigationLink(destination: DrawingView(pkCanvasView: $pkCanvasView, drawingImage: $drawingImage, badge: badge)) {
-                            Image(systemName: "pencil.circle.fill")
-                                .font(Font.title)
-                                .symbolRenderingMode(.palette)
-                                .foregroundStyle(.white, .gray)
-                        }
-                        .simultaneousGesture(TapGesture().onEnded {
-                            isEditing = false
-                        })
-                        Spacer()
+                HStack {
+                    Spacer()
+                    if isEditing {
                         Button {
                             withAnimation {
                                 badgeModel.removeBadge(badge)
@@ -81,29 +84,42 @@ struct GridItemView: View {
                                 .symbolRenderingMode(.palette)
                                 .foregroundStyle(.white, .red)
                         }
+                    } else if isDrawEditing {
+                        NavigationLink(destination:
+                                        DrawingView(pkCanvasView: $pkCanvasView, drawingImage: $drawingImage, badge: badge)
+                            .environmentObject(badgeModel)
+                            .environmentObject(colorPickerModel)
+                        ) {
+                            Image(systemName: "pencil.circle.fill")
+                                .font(Font.title)
+                                .symbolRenderingMode(.palette)
+                                .foregroundStyle(.white, .gray)
+                        }
+                        .simultaneousGesture(TapGesture().onEnded {
+                            isDrawEditing = false
+                        })
                     }
                 }
             }
             .onTapGesture {
-                withAnimation(.easeInOut(duration: 0.3)) {
-                    rotationEffect.toggle()
-                }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
-                    isFlipped.toggle()
-                }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                if !isDrawEditing {
                     withAnimation(.easeInOut(duration: 0.3)) {
                         rotationEffect.toggle()
                     }
-                }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.15) {
-                    isFlipped.toggle()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                        isFlipped.toggle()
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            rotationEffect.toggle()
+                        }
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.15) {
+                        isFlipped.toggle()
+                    }
                 }
             }
         }
     }
 }
 
-#Preview {
-    GridItemView(badge: Badge(name: "", symbol: "arrow.left", color: [1,0,0], fontWeight: 2), isEditing: .constant(false))
-}

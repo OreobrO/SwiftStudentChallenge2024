@@ -11,8 +11,8 @@ struct Badge: Identifiable, Codable, Hashable {
     let id = UUID()
     let name: String
     let symbol: String
-    let color: [CGFloat]
-    let fontWeight: Int
+    var color: [CGFloat]
+    var fontWeight: Int
 }
 
 extension Badge: Equatable {
