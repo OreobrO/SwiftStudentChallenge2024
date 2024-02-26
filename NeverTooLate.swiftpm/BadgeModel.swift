@@ -112,12 +112,24 @@ class BadgeModel: ObservableObject {
     func removeBadge(_ badge: Badge) {
         if let index = selectedBadges.firstIndex(of: badge) {
             selectedBadges.remove(at: index)
-            saveBadges()
         }
+        if let index = firstSelectedBadges.firstIndex(of: badge) {
+            firstSelectedBadges.remove(at: index)
+        }
+        if let index = secondSelectedBadges.firstIndex(of: badge) {
+            secondSelectedBadges.remove(at: index)
+        }
+        if let index = thirdSelectedBadges.firstIndex(of: badge) {
+            thirdSelectedBadges.remove(at: index)
+        }
+        saveBadges()
     }
     
     func removeAll() {
         selectedBadges = []
+        firstSelectedBadges = []
+        secondSelectedBadges = []
+        thirdSelectedBadges = []
         }
 }
 
