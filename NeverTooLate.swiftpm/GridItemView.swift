@@ -26,6 +26,8 @@ struct GridItemView: View {
         GeometryReader { geo in
             ZStack {
                 Circle()
+                    .foregroundStyle(.white)
+                Circle()
                     .foregroundStyle(LinearGradient(colors: [.gray.opacity(0.1), .white], startPoint: .top, endPoint: .bottom))
                 Circle()
                     .strokeBorder(lineWidth: geo.size.height / 10)
@@ -62,7 +64,8 @@ struct GridItemView: View {
                         .environmentObject(badgeModel)
                         .environmentObject(colorPickerModel)
                     ) {
-                        Color.clear
+                        Circle()
+                            .foregroundStyle(Color.white.opacity(0.3))
                     }
                 }
             }
@@ -70,35 +73,36 @@ struct GridItemView: View {
                 Angle(degrees: rotationEffect ? 180 : 0),
                 axis: (x: 0.0, y: 1.0, z: 0.0)
             )
-            .overlay(alignment: .top) {
-                HStack {
-                    Spacer()
-                    if isEditing {
-                        Button {
-                            withAnimation {
-                                badgeModel.removeBadge(badge)
-                            }
-                        } label: {
+            .overlay(alignment: .center) {
+                if isEditing {
+                    Button {
+                        withAnimation {
+                            badgeModel.removeBadge(badge)
+                        }
+                    } label: {
+                        ZStack {
+                            Circle()
+                                .foregroundStyle(Color.white.opacity(0.3))
                             Image(systemName: "xmark.circle.fill")
-                                .font(Font.title)
+                                .font(.system(size: 24))
                                 .symbolRenderingMode(.palette)
                                 .foregroundStyle(.white, .red)
                         }
-                    } else if isDrawEditing {
-                        NavigationLink(destination:
-                                        DrawingView(pkCanvasView: $pkCanvasView, drawingImage: $drawingImage, badge: badge)
-                            .environmentObject(badgeModel)
-                            .environmentObject(colorPickerModel)
-                        ) {
-                            Image(systemName: "pencil.circle.fill")
-                                .font(Font.title)
-                                .symbolRenderingMode(.palette)
-                                .foregroundStyle(.white, .gray)
-                        }
-                        .simultaneousGesture(TapGesture().onEnded {
-                            isDrawEditing = false
-                        })
                     }
+                } else if isDrawEditing {
+                    NavigationLink(destination:
+                                    DrawingView(pkCanvasView: $pkCanvasView, drawingImage: $drawingImage, badge: badge)
+                        .environmentObject(badgeModel)
+                        .environmentObject(colorPickerModel)
+                    ) {
+                        Image(systemName: "pencil.circle.fill")
+                            .font(.system(size: 24))
+                            .symbolRenderingMode(.palette)
+                            .foregroundStyle(.white, .gray)
+                    }
+                    .simultaneousGesture(TapGesture().onEnded {
+                        isDrawEditing = false
+                    })
                 }
             }
             .onTapGesture {

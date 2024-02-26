@@ -28,71 +28,81 @@ struct DrawingView: View {
     var body: some View {
         GeometryReader { geo in
             ZStack {
-                VStack {
-                    ZStack {
-                        Circle()
-                            .foregroundStyle(LinearGradient(colors: [.gray.opacity(0.1), .white], startPoint: .top, endPoint: .bottom))
-                        Image(systemName: badge.symbol)
-                            .resizable()
-                            .fontWeight(fontWeights[badgeModel.selectedBadges[badgeModel.selectedBadges.lastIndex(of: badge)!].fontWeight])
-                            .aspectRatio(contentMode: .fit)
-                            .foregroundColor(
-                                changeArrayToColor(badgeModel.selectedBadges[badgeModel.selectedBadges.lastIndex(of: badge)!].color)
-                            )
-                            .padding(8)
-                            .aspectRatio(contentMode: .fit)
-                            .scaleEffect(0.4)
-                        PKCanvas(canvasView: $pkCanvasView)
-                            .frame(width: geo.size.height * 8 / 10, height: geo.size.height * 8 / 10)
-                            .cornerRadius(geo.size.height)
-                        Circle()
-                            .strokeBorder(lineWidth: geo.size.height / 10)
-                            .foregroundStyle(Color.badgeGradient1)
-                        Circle()
-                            .strokeBorder(lineWidth: geo.size.height / 50)
-                            .foregroundStyle(Color.badgeGradient2)
-                    }
+                LinearGradient(colors: [.white, Color(hex: 0xD1D1D1)], startPoint: .top, endPoint: .bottom)
+                    .ignoresSafeArea()
+                ZStack {
                     VStack {
-                        colorPickerView
-                        
-                        Picker("FontWeight", selection: $badgeModel.selectedBadges[badgeModel.selectedBadges.lastIndex(of: badge)!].fontWeight) {
-                            ForEach(0..<fontWeights.count, id: \.self) { index in
-                                Text(fontWeightLabels[index]).tag(fontWeights[index])
+                        ZStack {
+                            Circle()
+                                .foregroundStyle(.white)
+                            Circle()
+                                .foregroundStyle(LinearGradient(colors: [.gray.opacity(0.1), .white], startPoint: .top, endPoint: .bottom))
+                            Image(systemName: badge.symbol)
+                                .resizable()
+                                .fontWeight(fontWeights[badgeModel.selectedBadges[badgeModel.selectedBadges.lastIndex(of: badge)!].fontWeight])
+                                .aspectRatio(contentMode: .fit)
+                                .foregroundColor(
+                                    changeArrayToColor(badgeModel.selectedBadges[badgeModel.selectedBadges.lastIndex(of: badge)!].color)
+                                )
+                                .padding(8)
+                                .aspectRatio(contentMode: .fit)
+                                .scaleEffect(0.4)
+                            PKCanvas(canvasView: $pkCanvasView)
+                                .cornerRadius(geo.size.height)
+                            Circle()
+                                .strokeBorder(lineWidth: geo.size.height / 12)
+                                .foregroundStyle(Color.badgeGradient1)
+                            Circle()
+                                .strokeBorder(lineWidth: geo.size.height / 60)
+                                .foregroundStyle(Color.badgeGradient2)
+                        }
+                        .frame(width: geo.size.height * 7 / 10, height: geo.size.height * 7 / 10)
+
+                        VStack {
+                            colorPickerView
+                            Spacer()
+                                .frame(height: 32)
+                            Picker("FontWeight", selection: $badgeModel.selectedBadges[badgeModel.selectedBadges.lastIndex(of: badge)!].fontWeight) {
+                                ForEach(0..<fontWeights.count, id: \.self) { index in
+                                    Text(fontWeightLabels[index]).tag(fontWeights[index])
+                                }
                             }
+                            .pickerStyle(SegmentedPickerStyle())
                         }
-                        .pickerStyle(SegmentedPickerStyle())
-                    }
-                    .frame(width: geo.size.width * 0.8)
-                    .padding()
-                }
-                    
-                VStack {
-                    HStack {
-                        Button(action: saveDrawing) {
-                            Image(systemName: "arrow.up")
-                        }
+                        .padding()
                         
                         Spacer()
-                        
-                        Button(action: shareDrawing) {
-                            Image(systemName: "square.and.arrow.up")
-                        }.sheet(isPresented: $isSharing) {
-                            let image = pkCanvasView.drawing.image(from: pkCanvasView.bounds, scale: UIScreen.main.scale)
-                            ShareSheet(
-                                activityItems: [image],
-                                excludedActivityTypes: [])
-                            
-                        }
-                        .frame(width: 30, height: 30)
-                        .padding(10)
-                        .background(Color.white.opacity(0.7))
-                        .cornerRadius(20)
+                            .frame(height: 64)
                     }
-                    Spacer()
+                    
+                    VStack {
+                        HStack {
+                            Button(action: saveDrawing) {
+                                Image(systemName: "arrow.up")
+                            }
+                            
+                            Spacer()
+                            
+                            Button(action: shareDrawing) {
+                                Image(systemName: "square.and.arrow.up")
+                            }.sheet(isPresented: $isSharing) {
+                                let image = pkCanvasView.drawing.image(from: pkCanvasView.bounds, scale: UIScreen.main.scale)
+                                ShareSheet(
+                                    activityItems: [image],
+                                    excludedActivityTypes: [])
+                                
+                            }
+                            .frame(width: 30, height: 30)
+                            .padding(10)
+                            .background(Color.white.opacity(0.7))
+                            .cornerRadius(20)
+                        }
+                        Spacer()
+                    }
                 }
+                .padding(32)
             }
         }
-        .padding(50)
     }
     
     func shareDrawing() {

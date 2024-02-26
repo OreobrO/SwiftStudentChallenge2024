@@ -18,44 +18,74 @@ struct GridView: View {
     @State private var gridColumns = Array(repeating: GridItem(.flexible()), count: columns)
     
     var body: some View {
-        VStack {
-            ScrollView {
-                LazyVGrid(columns: gridColumns) {
-                    ForEach(badgeModel.selectedBadges) { badge in
-                        GeometryReader { geo in
-                            GridItemView(badge: badge, isEditing: $isEditing, isDrawEditing: $isDrawEditing)
-                                .environmentObject(badgeModel)
+        ZStack {
+            LinearGradient(colors: [.white, Color(hex: 0xD9D9D9)], startPoint: .top, endPoint: .bottom)
+                .ignoresSafeArea()
+            VStack {
+                ScrollView {
+                    LazyVGrid(columns: gridColumns) {
+                        ForEach(badgeModel.selectedBadges) { badge in
+                            GeometryReader { geo in
+                                GridItemView(badge: badge, isEditing: $isEditing, isDrawEditing: $isDrawEditing)
+                                    .environmentObject(badgeModel)
+                            }
+                            .cornerRadius(8.0)
+                            .aspectRatio(1, contentMode: .fit)
+                            .shadow(color: Color(red: 0.8, green: 0.8, blue: 0.8, opacity: 0.5), radius: 8)
+                            .padding()
                         }
-                        .cornerRadius(8.0)
-                        .aspectRatio(1, contentMode: .fit)
-                        .shadow(color: Color(red: 0.8, green: 0.8, blue: 0.8, opacity: 0.5), radius: 8)
-                        .padding()
+                    }
+                    .padding()
+                }
+            }
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    Button {
+                        isDrawEditing.toggle()
+                    } label: {
+                        if isDrawEditing {
+                            Text("Done")
+                                .foregroundStyle(.gray)
+                                .bold()
+                                .font(.system(size: 24))
+                                .padding()
+                                .background {
+                                    RoundedRectangle(cornerRadius: 100)
+                                        .foregroundStyle(Color.white)
+                                        .shadow(color: .gray, radius: 8, x: 0, y: 4)
+                                }
+                                .padding(32)
+                        } else {
+                            Image(systemName: "pencil")
+                                .foregroundStyle(.gray)
+                                .bold()
+                                .font(.system(size: 24))
+                                .padding()
+                                .background {
+                                    RoundedRectangle(cornerRadius: 100)
+                                        .foregroundStyle(Color.white)
+                                        .shadow(color: .gray, radius: 8, x: 0, y: 4)
+                                }
+                                .padding(32)
+                        }
                     }
                 }
-                .padding()
             }
         }
         .navigationBarTitle("Template Gallery")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button(isEditing ? "Done" : "Edit") {
-                    isEditing.toggle()
-                }
-            }
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    if isEditing {
-                        showingDeleteAlert = true
-                    } else {
-                        isDrawEditing = true
+                HStack {
+                    Button(isEditing ? "Delete All" : "") {
+                        if isEditing {
+                            showingDeleteAlert = true
+                        }
                     }
-                } label: {
-                    if isEditing {
-                        Text("Delete all")
-                            .foregroundStyle(.red)
-                    } else {
-                        Image(systemName: "pencil")
+                    Button(isEditing ? "Done" : "Edit") {
+                        isEditing.toggle()
                     }
                 }
             }
@@ -68,9 +98,7 @@ struct GridView: View {
                     badgeModel.removeAll()
                     isEditing = false
                 }),
-                secondaryButton: .cancel {
-                    isEditing = false
-                }
+                secondaryButton: .cancel()
             )
         }
     }
