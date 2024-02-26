@@ -18,6 +18,7 @@ struct GridView: View {
     @State private var capturedImage: UIImage?
     @State private var instructionStarted = false
     @State private var instructionEnded = false
+    @State private var isDone = false
     
     let badgePosition: [CGPoint] = [
         CGPoint(x: -60, y: -280),
@@ -160,16 +161,16 @@ struct GridView: View {
                 )
             }
             .sheet(isPresented: $isPresentingShareSheet, content: {
-                    if let image = capturedImage {
-                        ShareSheet(activityItems: [image])
-                    }
-                })
+                if let image = capturedImage {
+                    ShareSheet(activityItems: [image])
+                }
+            })
             
             VStack {
                 Text("IT'S NEVER TOO LATE!")
                     .font(Font.custom("Cinzel-Bold", size: 60)).foregroundColor(.black)
                     .shadow(radius: 7, x: 0, y: 10)
-                Text(instructionEnded ? "Never give up on your dreams and good luck~" : "")
+                Text("Never give up on your dreams and good luck~")
                     .font(Font.custom("Cinzel-Bold", size: 30)).foregroundColor(.black)
                     .shadow(radius: 7, x: 0, y: 10)
                 Spacer()
@@ -183,6 +184,7 @@ struct GridView: View {
                         .shadow(radius: 7, x: 0, y: 10)
                     Spacer()
                 }
+                .opacity(isDone ? 0 : 1)
             }
         }
         .onAppear {
@@ -195,26 +197,31 @@ struct GridView: View {
                         instructionEnded = true
                     }
                 }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        isDone = true
+                    }
+                }
             }
         }
     }
     
     func captureScreenshot() -> UIImage {
-          let window = UIApplication.shared.windows.first { $0.isKeyWindow }
-          let scale = UIScreen.main.scale
-          
-          UIGraphicsBeginImageContextWithOptions(window!.frame.size, false, scale)
-          
-          window?.drawHierarchy(in: window!.frame, afterScreenUpdates: true)
-          
-          guard let screenshot = UIGraphicsGetImageFromCurrentImageContext() else {
-              return UIImage()
-          }
-          
-          UIGraphicsEndImageContext()
-          
-          return screenshot
-      }
+        let window = UIApplication.shared.windows.first { $0.isKeyWindow }
+        let scale = UIScreen.main.scale
+        
+        UIGraphicsBeginImageContextWithOptions(window!.frame.size, false, scale)
+        
+        window?.drawHierarchy(in: window!.frame, afterScreenUpdates: true)
+        
+        guard let screenshot = UIGraphicsGetImageFromCurrentImageContext() else {
+            return UIImage()
+        }
+        
+        UIGraphicsEndImageContext()
+        
+        return screenshot
+    }
 }
 
 struct GridView_Previews: PreviewProvider {

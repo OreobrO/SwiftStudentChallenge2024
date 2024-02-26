@@ -91,12 +91,12 @@ struct StoryView: View {
 
 func storyText(index: Int) -> String {
     switch index {
-    case 0: return String("안녕, 나는 한국에서 온 민규야, 내 이야기를 들어볼래?")
-    case 1: return String("나는 건축을 전공했어, 멋진 건물을 만들었지\n20대를 이렇게 보냈던 것 같아")
-    case 2: return String("하드웨어뿐 아니라 소프트웨어로\n사람들에게 감동을 주는 사람이 되고싶었어\n그래서 30에 애플아카데미에 가게 되었지")
-    case 3: return String("비결을 알려줘?\n내 비결은 나이와 관계없이 하고싶은 것들을\n찾아나가는  도전정신이야.")
-    case 4: return String("그럼 이제 나와 함께\n너의 꿈을 찾아가볼까?\n지금이라도 늦지 않았어~")
-    default: return String("")
+        case 0: return String("Hey, I'm Min-Gyu from South Korea. Would you like to hear my story?")
+        case 1: return String("I majored in architecture and designed some amazing buildings.\n\nIt feels like that's how I spent my twenties.")
+        case 2: return String("However, I wanted to inspire people not only with hardware but also with software.\n\nSo, I joined the Apple Developer Academy at 30.")
+        case 3: return String("Can I share my secret to always taking on challenges?\n\nMy secret is the spirit of exploration, \nfinding what I want to do regardless of age.")
+        case 4: return String("Shall we embark on finding your dreams together now?\n\nIt's never too late to start.")
+        default: return String("")
     }
 }
 #Preview {
